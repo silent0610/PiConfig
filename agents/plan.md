@@ -1,7 +1,7 @@
 ---
 name: plan
 label: "📋 Plan"
-tools: "read,bash,grep,find,ls,subagent"
+tools: "read,bash,grep,find,ls,subagent,web_search"
 permission:
   read: allow
   grep: allow

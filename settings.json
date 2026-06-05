@@ -16,7 +16,7 @@
     "opencode-go/deepseek-v4-pro",
     "opencode-go/deepseek-v4-flash"
   ],
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "packages": [
     "npm:pi-web-access",
     "npm:@gotgenes/pi-permission-system",
@@ -24,7 +24,9 @@
     "npm:pi-intercom",
     "npm:pi-hashline-readmap",
     "npm:pi-markdown-preview",
-    "git:github.com/JuliusBrussee/caveman"
+    "git:github.com/JuliusBrussee/caveman",
+    "npm:@majorgilles/pi-grill-me",
+    "npm:@juicesharp/rpiv-i18n"
   ],
   "lastChangelogVersion": "0.78.0"
 }

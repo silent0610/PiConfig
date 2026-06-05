@@ -1,7 +1,7 @@
 ---
 name: build
 label: "🔧 Build"
-tools: "read,bash,edit,write,grep,find,ls,subagent"
+tools: "read,bash,edit,write,grep,find,ls,subagent,web_search"
 permission:
   read: allow
   grep: allow

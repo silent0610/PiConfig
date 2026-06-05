@@ -1,7 +1,7 @@
 {
   "defaultProvider": "opencode-go",
   "defaultModel": "deepseek-v4-flash",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "subagents": {
     "agentOverrides": {
       "worker": {
@@ -14,7 +14,8 @@
   },
   "enabledModels": [
     "opencode-go/deepseek-v4-pro",
-    "opencode-go/deepseek-v4-flash"
+    "opencode-go/deepseek-v4-flash",
+    "opencode-go/mimo-v2.5-pro"
   ],
   "hideThinkingBlock": true,
   "packages": [
@@ -28,5 +29,5 @@
     "npm:@majorgilles/pi-grill-me",
     "npm:@juicesharp/rpiv-i18n"
   ],
-  "lastChangelogVersion": "0.78.0"
+  "lastChangelogVersion": "0.78.1"
 }

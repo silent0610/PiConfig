@@ -1,0 +1,30 @@
+{
+  "defaultProvider": "opencode-go",
+  "defaultModel": "deepseek-v4-flash",
+  "defaultThinkingLevel": "high",
+  "subagents": {
+    "agentOverrides": {
+      "worker": {
+        "defaultReads": "context.md, plan.md, ./.pi/MEMORY.md"
+      },
+      "planner": {
+        "defaultReads": "context.md, ./.pi/MEMORY.md"
+      }
+    }
+  },
+  "enabledModels": [
+    "opencode-go/deepseek-v4-pro",
+    "opencode-go/deepseek-v4-flash"
+  ],
+  "hideThinkingBlock": false,
+  "packages": [
+    "npm:pi-web-access",
+    "npm:@gotgenes/pi-permission-system",
+    "npm:pi-subagents",
+    "npm:pi-intercom",
+    "npm:pi-hashline-readmap",
+    "npm:pi-markdown-preview",
+    "git:github.com/JuliusBrussee/caveman"
+  ],
+  "lastChangelogVersion": "0.78.0"
+}

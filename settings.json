@@ -5,10 +5,10 @@
   "subagents": {
     "agentOverrides": {
       "worker": {
-        "defaultReads": "context.md, plan.md, ./.pi/MEMORY.md"
+        "defaultReads": "./.pi/context.md, plan.md"
       },
       "planner": {
-        "defaultReads": "context.md, ./.pi/MEMORY.md"
+        "defaultReads": "./.pi/context.md"
       }
     }
   },

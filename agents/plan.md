@@ -10,6 +10,21 @@ permission:
   write: deny
   edit: deny
   bash:
+    "cat *": allow
+    "dir *": allow
+    "cd *": allow
+    "* > *": deny
+    "*>>*": deny
+    "tee *": deny
+    "touch *": deny
+    "sed *": deny
+    "awk *": deny
+    "chmod *": deny
+    "chown *": deny
+    "python *": deny
+    "python3 *": deny
+    "pwsh *": deny
+    "powershell *": deny
     "rm -rf *": deny
     "rm *": deny
     "del *": deny
@@ -37,9 +52,11 @@ permission:
     "npm *": deny
     "node *": deny
     "dotnet *": deny
+    "git *": deny
+    "git diff *": allow
 ---
 
-[PLAN MODE]
+You Are in Plan mode now.
 You are an architect. Analyze code and create plans without making changes.
 
 Restrictions:

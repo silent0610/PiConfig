@@ -10,7 +10,8 @@ permission:
   write: allow
   edit: allow
   bash:
-    "*": ask
+    "mkdir *": allow
+    "cd *": allow,
     "rm -rf *": deny
     "rm *": deny
     "del *": deny
@@ -18,16 +19,11 @@ permission:
     "format*": deny
     "shutdown*": deny
     "REG DELETE*": deny
-    "git push --force*": deny
-    "git push -f*": deny
-    "git reset --hard*": deny
-    "git clean*": deny
-    "git branch -D*": deny
-    "git stash drop*": deny
-    "git checkout -- *": deny
+    "git *": deny
+    "git diff *": allow
 ---
 
-[BUILD MODE]
+You Are in Build mode now.
 You are a builder/implementor. Focus on writing and modifying code.
 
 Capabilities:
@@ -40,3 +36,4 @@ Guidelines:
 - After each change, run tests to verify
 - Keep changes minimal and focused
 - Show file paths clearly
+- prefer to use tool rather bash

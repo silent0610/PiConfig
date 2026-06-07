@@ -17,11 +17,14 @@
  *   [BUILD MODE] You are a builder...
  *
  * - name/label/tools → used by this extension
- * - permission       → used by pi-permission-system (per-agent rules)
+ * - permission       → used by this extension (bash deny patterns) and pi-permission-system
  * - Markdown body    → injected into system prompt as agent instructions
  */
 
-import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import type {
+  ExtensionAPI,
+  ExtensionContext,
+} from "@earendil-works/pi-coding-agent";
 import { Key } from "@earendil-works/pi-tui";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
@@ -34,6 +37,9 @@ interface AgentDefinition {
   label: string;
   tools: string[];
   prompt: string;
+  permission: {
+    bash?: Record<string, "deny" | "allow" | "ask">;
+  };
 }
 
 const AGENTS_DIR = join(getAgentDir(), "agents");
@@ -50,7 +56,10 @@ function parseFrontmatter(raw: string): Record<string, unknown> {
     const line = rawLine.trim();
     const sep = line.indexOf(":");
     if (sep <= 0) continue;
-    const key = line.slice(0, sep).trim().replace(/^['"]|['"]$/g, "");
+    const key = line
+      .slice(0, sep)
+      .trim()
+      .replace(/^['"]|['"]$/g, "");
     const rawValue = line.slice(sep + 1).trim();
     while (stack.length > 1 && indent <= stack[stack.length - 1].indent) {
       stack.pop();
@@ -100,8 +109,27 @@ function loadAgentFile(filePath: string): AgentDefinition | null {
       .map((t) => t.trim())
       .filter(Boolean);
     const prompt = stripFrontmatter(content);
+
+    // Parse permission rules
+    const permission: AgentDefinition["permission"] = {};
+    const permRaw = fm.permission;
+    if (permRaw && typeof permRaw === "object") {
+      const bashRaw = (permRaw as Record<string, unknown>).bash;
+      if (bashRaw && typeof bashRaw === "object") {
+        const bashRules: Record<string, "deny" | "allow" | "ask"> = {};
+        for (const [pattern, action] of Object.entries(
+          bashRaw as Record<string, string>,
+        )) {
+          if (action === "deny" || action === "allow" || action === "ask") {
+            bashRules[pattern] = action;
+          }
+        }
+        permission.bash = bashRules;
+      }
+    }
+
     if (!name) return null;
-    return { name, label, tools, prompt };
+    return { name, label, tools, prompt, permission };
   } catch {
     return null;
   }
@@ -124,10 +152,10 @@ export default function (pi: ExtensionAPI) {
   const agents = loadAllAgents();
   let currentAgent = agents.keys().next().value ?? "build";
   const fallbackAgent: AgentDefinition = {
-    name: "build",
-    label: "🔧 Build",
-    tools: ["read", "bash", "edit", "write", "grep", "find", "ls"],
-    prompt: "[BUILD MODE]\nYou are a builder/implementor.",
+    name: "fallback",
+    label: "fallback",
+    tools: ["read", "grep", "find", "ls"],
+    prompt: "[fallback]\nYou can only read",
   };
 
   function getAgent(name: string): AgentDefinition {
@@ -182,13 +210,60 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
-  // Block write tools for agents that don't have them
+  // Helper: simple glob match ( * matches any chars)
+  function globMatch(pattern: string, text: string): boolean {
+    const escaped = pattern.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp("^" + escaped.replace(/\*/g, ".*") + "$");
+    return regex.test(text);
+  }
+
+  // Block tools not in the agent's tool list, with informative reason.
+  // Also checks bash commands against agent permission deny patterns.
   pi.on("tool_call", async (event) => {
     const agent = getAgent(currentAgent);
+
+    // Check bash command patterns when bash is allowed
+    if (event.toolName === "bash" && agent.permission.bash) {
+      const command = event.input.command as string;
+      const bashRules = agent.permission.bash;
+      for (const [pattern, action] of Object.entries(bashRules)) {
+        if (action !== "deny") continue;
+        if (globMatch(pattern, command)) {
+          return {
+            block: true,
+            reason: [
+              `${agent.label}: bash command denied by rule \`${pattern}\`.`,
+              `Command: ${command}`,
+            ].join("\n\n"),
+          };
+        }
+      }
+    }
+
+    // Block tools not in agent.tools
     if (agent.tools.includes(event.toolName)) return;
+
+    const toolsList = agent.tools.join(", ");
+    const deniedTools = ["edit", "write", "bash"].filter(
+      (t) => !agent.tools.includes(t),
+    );
+    const deniedInfo =
+      deniedTools.length > 0 ? `\nDenied: ${deniedTools.join(", ")}` : "";
+
+    // First 4 non-empty lines of the agent prompt as mode summary
+    const modeSummary = agent.prompt
+      .split("\n")
+      .filter((l) => l.trim())
+      .slice(0, 4)
+      .join("\n");
+
     return {
       block: true,
-      reason: `${agent.label}: ${event.toolName} not allowed`,
+      reason: [
+        `${agent.name}: \`${event.toolName}\` not allowed.`,
+        `Available tools: ${toolsList}${deniedInfo}`,
+        modeSummary,
+      ].join("\n\n"),
     };
   });
 

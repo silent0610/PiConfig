@@ -1,7 +1,7 @@
 {
   "defaultProvider": "opencode-go",
-  "defaultModel": "deepseek-v4-flash",
-  "defaultThinkingLevel": "xhigh",
+  "defaultModel": "deepseek-v4-pro",
+  "defaultThinkingLevel": "high",
   "subagents": {
     "agentOverrides": {
       "worker": {

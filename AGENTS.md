@@ -49,11 +49,11 @@ When your changes create orphans:
 
 Transform imperative tasks into verifiable goals:
 
-| Instead of... | Transform to... |
-|--------------|-----------------|
+| Instead of...    | Transform to...                                       |
+| ---------------- | ----------------------------------------------------- |
 | "Add validation" | "Write tests for invalid inputs, then make them pass" |
-| "Fix the bug" | "Write a test that reproduces it, then make it pass" |
-| "Refactor X" | "Ensure tests pass before and after" |
+| "Fix the bug"    | "Write a test that reproduces it, then make it pass"  |
+| "Refactor X"     | "Ensure tests pass before and after"                  |
 
 For multi-step tasks, state a brief plan:
 
@@ -69,3 +69,7 @@ Strong success criteria let the LLM loop independently. Weak criteria ("make it 
 - 即使在 Windows 系统上，也必须使用 `/` 而不是 `\`
 - 例如：`src/components/App.tsx` true
 - 例如：`src\components\App.tsx` false
+
+## Not Allowed
+
+不允许执行 Git 相关命令

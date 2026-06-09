@@ -17,14 +17,11 @@
  *   [BUILD MODE] You are a builder...
  *
  * - name/label/tools → used by this extension
- * - permission       → used by this extension (bash deny patterns) and pi-permission-system
+ * - permission       → used by pi-permission-system (per-agent rules)
  * - Markdown body    → injected into system prompt as agent instructions
  */
 
-import type {
-  ExtensionAPI,
-  ExtensionContext,
-} from "@earendil-works/pi-coding-agent";
+import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Key } from "@earendil-works/pi-tui";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";

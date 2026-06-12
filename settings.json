@@ -1,7 +1,7 @@
 {
   "defaultProvider": "opencode-go",
-  "defaultModel": "mimo-v2.5-pro",
-  "defaultThinkingLevel": "high",
+  "defaultModel": "deepseek-v4-flash",
+  "defaultThinkingLevel": "xhigh",
   "subagents": {
     "agentOverrides": {
       "worker": {
@@ -27,7 +27,9 @@
     "npm:pi-markdown-preview",
     "git:github.com/JuliusBrussee/caveman",
     "npm:@majorgilles/pi-grill-me",
-    "npm:@juicesharp/rpiv-i18n"
+    "npm:@juicesharp/rpiv-i18n",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@juicesharp/rpiv-todo"
   ],
-  "lastChangelogVersion": "0.78.1"
+  "lastChangelogVersion": "0.79.1"
 }

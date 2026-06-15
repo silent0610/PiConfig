@@ -1,7 +1,7 @@
 {
   "defaultProvider": "opencode-go",
   "defaultModel": "deepseek-v4-flash",
-  "defaultThinkingLevel": "xhigh",
+  "defaultThinkingLevel": "high",
   "subagents": {
     "agentOverrides": {
       "worker": {
@@ -13,9 +13,7 @@
     }
   },
   "enabledModels": [
-    "opencode-go/deepseek-v4-pro",
-    "opencode-go/deepseek-v4-flash",
-    "opencode-go/mimo-v2.5-pro"
+    "opencode-go/deepseek-v4-flash"
   ],
   "hideThinkingBlock": true,
   "packages": [
@@ -31,5 +29,5 @@
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@juicesharp/rpiv-todo"
   ],
-  "lastChangelogVersion": "0.79.1"
+  "lastChangelogVersion": "0.79.3"
 }

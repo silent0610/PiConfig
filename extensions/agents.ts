@@ -1,26 +1,3 @@
-/**
- * Agent Mode Switcher for pi
- *
- * Agent definitions are loaded from ~/.pi/agent/agents/*.md files.
- * Each file uses YAML frontmatter for config + Markdown body for prompt:
- *
- *   ---
- *   name: build
- *   label: "🔧 Build"
- *   tools: "read,bash,edit,write,grep,find,ls"
- *   permission:
- *     read: allow
- *     bash:
- *       "rm *": deny
- *   ---
- *
- *   [BUILD MODE] You are a builder...
- *
- * - name/label/tools → used by this extension
- * - permission       → used by pi-permission-system (per-agent rules)
- * - Markdown body    → injected into system prompt as agent instructions
- */
-
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Key } from "@earendil-works/pi-tui";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
@@ -257,7 +234,7 @@ export default function (pi: ExtensionAPI) {
     return {
       block: true,
       reason: [
-        `${agent.name}: \`${event.toolName}\` not allowed.`,
+        `You Are ${agent.name} Agent: \`${event.toolName}\` not allowed. IF you Are Plan, Dont Try to Edit File By Any Way`,
         `Available tools: ${toolsList}${deniedInfo}`,
         modeSummary,
       ].join("\n\n"),

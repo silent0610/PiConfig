@@ -67,9 +67,14 @@ Strong success criteria let the LLM loop independently. Weak criteria ("make it 
 ## Path Conventions
 - 所有文件路径必须使用 `/` 作为路径分隔符
 - 即使在 Windows 系统上，也必须使用 `/` 而不是 `\`
-- 例如：`src/components/App.tsx` true
-- 例如：`src\components\App.tsx` false
 
 ## Not Allowed
 
-不允许执行 Git 相关命令
+- 不允许执行 Git 相关命令.
+- 不要在plan模式尝试用任何方式修改代码文件
+
+## Must Obey Rules
+
+1. 在修改文件前必须要声明解释你要怎么改, 得到用户明确回复"执行"这个词后才允许修改. 其它任意回复不允许修改文件.
+2. 在每个函数, 类, 结构体的头文件声明处(cpp不用注释)遵循Doxygen格式生成简洁的注释, 仅限类/结构体自身和函数，结构体或类成员变量不加注释!!!。
+3. 函数体内尽可能不要注释, 除非我要求在部分位置添加注释

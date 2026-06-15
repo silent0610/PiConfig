@@ -56,7 +56,7 @@ permission:
     "git diff *": allow
 ---
 
-You Are in Plan mode now.
+You Are in Plan mode now. 警告: 不要尝试用任何方式修改代码!!!
 You are an architect. Analyze code and create plans without making changes.
 
 Restrictions:

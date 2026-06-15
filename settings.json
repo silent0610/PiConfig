@@ -1,7 +1,7 @@
 {
   "defaultProvider": "opencode-go",
   "defaultModel": "deepseek-v4-flash",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "subagents": {
     "agentOverrides": {
       "worker": {
@@ -15,7 +15,7 @@
   "enabledModels": [
     "opencode-go/deepseek-v4-flash"
   ],
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "packages": [
     "npm:pi-web-access",
     "npm:@gotgenes/pi-permission-system",
@@ -23,7 +23,6 @@
     "npm:pi-intercom",
     "npm:pi-hashline-readmap",
     "npm:pi-markdown-preview",
-    "git:github.com/JuliusBrussee/caveman",
     "npm:@majorgilles/pi-grill-me",
     "npm:@juicesharp/rpiv-i18n",
     "npm:@juicesharp/rpiv-ask-user-question",
